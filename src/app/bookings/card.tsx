@@ -1,12 +1,12 @@
 import { Booking } from "@/globalRedux/modules/bookingsSlice";
-import { Grid } from "@mui/material";
+
 interface CardProps{
   booking: Booking
 }
 
 export default function Card({booking}:CardProps){
     return(
-        <Grid item sm={3}>
+        <div>
           <a href="#" className="block rounded-lg p-4 shadow-sm shadow-indigo-100">
 
 
@@ -15,7 +15,7 @@ export default function Card({booking}:CardProps){
       <div>
         <dt className="sr-only">Morador e Nº Apt</dt>
 
-        <dd className="font-medium">330-Aryadne</dd>
+        <dd className="font-medium">{booking.numApto}-{booking.name}</dd>
       </div>
 
     </dl>
@@ -34,7 +34,7 @@ export default function Card({booking}:CardProps){
 
           <p className="text-gray-500">Nº Máquina</p>
 
-          <p className="font-medium">2</p>
+          <p className="font-medium">{booking.machine}</p>
         </div>
       </div>
 
@@ -44,7 +44,7 @@ export default function Card({booking}:CardProps){
         <div className="mt-1.5 sm:mt-0">
           <p className="text-gray-500">Horário de Reserva</p>
 
-          <p className="font-medium">06h - 12h</p>
+          <p className="font-medium">{booking.hour}</p>
         </div>
       </div>
 
@@ -56,12 +56,12 @@ export default function Card({booking}:CardProps){
         <div className="mt-1.5 sm:mt-0">
           <p className="text-gray-500">Dia Reservado</p>
 
-          <p className="font-medium"> 07/07 - Sexta-feira</p>
+          <p className="font-medium"> {Intl.DateTimeFormat("pt-br",{day:'2-digit', month:'2-digit', weekday:'long'}).format(booking.date)}</p>
         </div>
       </div>
     </div>
   </div>
 </a>
-        </Grid>
+        </div>
     )
 }
