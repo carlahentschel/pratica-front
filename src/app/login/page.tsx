@@ -1,7 +1,7 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/globalRedux/hooks";
-import { apartmentActions } from "@/globalRedux/modules/apartmentSlice";
+import { apartmentActions, loginAsyncThunk } from "@/globalRedux/modules/apartmentSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,13 +15,13 @@ export default function Login() {
 
   useEffect(() => {
     if (user.token) {
-      push("/");
+      push("/bookings");
     }
   }, [user, push]);
 
   const handleSubmit = () => {
     console.log("entrou", numApt, password);
-    dispatch(apartmentActions.login({ number: numApt, password }));
+    dispatch(loginAsyncThunk({ number: numApt, password }));
   };
 
   return (
