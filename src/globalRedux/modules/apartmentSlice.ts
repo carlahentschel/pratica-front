@@ -1,4 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getBookingsAsyncThunk } from "./bookingsSlice";
+import { arch } from "os";
 
 
 interface Apartment {
@@ -7,24 +9,43 @@ interface Apartment {
   token: string
 }
 
+interface Login {
+  password: string, 
+  number: string
+}
+
 const initialState: Apartment = {
   number: '',
   resident: '',
   token: '',
 }
 
+export const loginAsyncThunk = createAsyncThunk("apartment/login", async(data: Login, {dispatch}) => {
+  //const response = await fetch("http://localhost:8080/apartment/login", {method: "POST", body: JSON.stringify(data)} ) 
+   // const body = await response.json()
+   const body = "2"
+    dispatch(getBookingsAsyncThunk(body))
+    return body
+})
+
 const slice = createSlice({
   name: 'apartment',
   initialState,
-  reducers:{
-    login: (_, action: PayloadAction<{password: string, number: string}>)=>{
-      return {
-        number: action.payload.number,
-        resident: action.payload.number,
-        token: Date.now().toString(),
-      }
-    }
-  }
+  reducers:{},
+  extraReducers(builder) {
+        builder.addCase(loginAsyncThunk.fulfilled, (state, action) => {
+            return {
+              number: action.payload,
+              resident: action.payload,
+              token: action.payload
+            }
+            
+        })
+        builder.addCase(loginAsyncThunk.rejected, (state, action) => {
+            console.log("Error", action.error);
+            
+        })
+    },
 })
 
 export const apartmentReducer = slice.reducer;
